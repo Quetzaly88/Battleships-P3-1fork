@@ -77,15 +77,6 @@ def main():
     generate_ship_loc(comp)
 
 
-def welcome():
-    """
-    Opening message to the game
-    """
-    print("Welcome to you vs. computer Battleships!")
-    username = input("Type in a username and press return: ")
-    print(f"Hi {username}! We will auto generate your battleship locations. You have 4 battleships to find within the computer's board")
-    
-
 def user_guess():
     """
     Get user input on battleship guess
@@ -93,9 +84,20 @@ def user_guess():
     print("Here is the computer's board:")
     print_board(user_guesses)
     print("Which column would you like to fire at?")
-    guess_col = int(input("Enter a number and press enter: "))
-    print("Which row would you like to fire at?")
-    guess_row = int(input("Enter a number and press enter: "))  
+
+    while True:
+        guess_col = input("Enter a number and press enter: ")
+        if validate_data(guess_col):
+            break
+    while True:
+        print("Which row would you like to fire at?")
+        guess_row = input("Enter a number and press enter: ")
+        if validate_data(guess_row):
+            break
+
+    guess_col = int(guess_col)
+    guess_row = int(guess_row)
+
     if comp[guess_col][guess_row] == " o ":
         user_guesses[guess_col][guess_row] = " # "
         print("YAY! You hit their ship!")
@@ -124,12 +126,27 @@ def comp_guess():
 
 
 def game_play():
-    for i in range (0, 5):
+    for i in range(0, 5):
         print(f"This is turn {i +1}/10")
         user_guess()
         comp_guess()
         i += 1
 
+
+def validate_data(value):
+    """
+    If values is not between 0 and 4, will raise an error and request a new input
+    """
+    try:
+        if int(value) > 4 or int(value) < 0:
+            raise ValueError(
+                "Your shot is out of bounds! Please choose a number between 0 and 4"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.")
+        return False
+
+    return True
 
 
 main()
