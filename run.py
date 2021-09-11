@@ -1,6 +1,11 @@
 # Your code goes here.
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
+
+# So we've got turns, we've got guess inputs, guess random num, we've got checking if it's a hit/miss
+# Need: Exception handling
+# Need: Checking for a winner. This might be that all the ships are found or it might be who has the most hits.
+
 from random import randint
 
 
@@ -61,7 +66,6 @@ def welcome():
     print_board(user_guesses)
 
 
-
 def main():
     """
     The function calling function
@@ -71,7 +75,7 @@ def main():
     make_board(user_guesses)
     generate_ship_loc(user)
     generate_ship_loc(comp)
-    
+
 
 def welcome():
     """
@@ -80,14 +84,14 @@ def welcome():
     print("Welcome to you vs. computer Battleships!")
     username = input("Type in a username and press return: ")
     print(f"Hi {username}! We will auto generate your battleship locations. You have 4 battleships to find within the computer's board")
-    print("Here is the computer's board:")
-    print_board(user_guesses)
-
+    
 
 def user_guess():
     """
     Get user input on battleship guess
     """
+    print("Here is the computer's board:")
+    print_board(user_guesses)
     print("Which column would you like to fire at?")
     guess_col = int(input("Enter a number and press enter: "))
     print("Which row would you like to fire at?")
@@ -119,7 +123,15 @@ def comp_guess():
     print_board(user)
 
 
+def game_play():
+    for i in range (0, 5):
+        print(f"This is turn {i +1}/10")
+        user_guess()
+        comp_guess()
+        i += 1
+
+
+
 main()
 welcome()
-user_guess()
-comp_guess()
+game_play()
