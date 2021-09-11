@@ -1,10 +1,6 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
-
-# So we've got turns, we've got guess inputs, guess random num, we've got checking if it's a hit/miss
-# Need: Exception handling
-# Need: Checking for a winner. This might be that all the ships are found or it might be who has the most hits.
+# Need: complete winning checking
+# Need: check if that turn has already been taken.
 
 from random import randint
 
@@ -61,14 +57,19 @@ def welcome():
     """
     print("Welcome to you vs. computer Battleships!")
     username = input("Type in a username and press return: ")
-    print(f"Hi {username}! We will auto generate your battleship locations. You have 4 battleships to find within the computer's board")
+    print(f'''Hi {username}! We will auto generate your battleship locations.
+You have 4 battleships to find within the computer's board.''')
     print("Here is the computer's board:")
     print_board(user_guesses)
 
 
-def main():
+def generate_boards():
     """
-    The function calling function
+    Creates all the boards ready for use. A user board which will house the
+    user's battleships that the computer will try to find. The comp board is
+    the computer board housing the computer's battleships but the user_guesses
+    board will be the version of the computer board shown to the user - we don't
+    want to show the user where the computer's ships are!
     """
     make_board(user)
     make_board(comp)
@@ -123,10 +124,11 @@ def comp_guess():
         print("YAY! They missed!")
     print("Here's your board: ")
     print_board(user)
+    check_winner(user)
 
 
 def game_play():
-    for i in range(0, 5):
+    for i in range(0, 10):
         print(f"This is turn {i +1}/10")
         user_guess()
         comp_guess()
@@ -135,12 +137,13 @@ def game_play():
 
 def validate_data(value):
     """
-    If values is not between 0 and 4, will raise an error and request a new input
+    If values is not between 0 and 4, will raise an error and request a new
+    input
     """
     try:
         if int(value) > 4 or int(value) < 0:
             raise ValueError(
-                "Your shot is out of bounds! Please choose a number between 0 and 4"
+                "Your shot is out of bounds! Choose a number between 0 and 4"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.")
@@ -149,6 +152,18 @@ def validate_data(value):
     return True
 
 
-main()
+def check_winner(board):
+    """
+    Sums the number of times " o " (battleships) appear in the board. if it is
+    equal to zero, that means someone has won.
+    """
+    total = 0
+    for list in board:
+        total += list.count(" o ")
+    if total == 0:
+        print("The game is WON!")
+
+
+generate_boards()
 welcome()
 game_play()
