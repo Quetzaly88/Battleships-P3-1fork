@@ -4,9 +4,9 @@
 from random import randint
 
 
-board_user = []
-board_user_guesses = []
-board_comp = []
+user = []
+user_guesses = []
+comp = []
 
 
 def make_board(board):
@@ -58,7 +58,7 @@ def welcome():
     username = input("Type in a username and press return: ")
     print(f"Hi {username}! We will auto generate your battleship locations. You have 4 battleships to find within the computer's board")
     print("Here is the computer's board:")
-    print_board(board_user_guesses)
+    print_board(user_guesses)
 
 
 
@@ -66,11 +66,11 @@ def main():
     """
     The function calling function
     """
-    make_board(board_user)
-    make_board(board_comp)
-    make_board(board_user_guesses)
-    generate_ship_loc(board_user)
-    generate_ship_loc(board_comp)
+    make_board(user)
+    make_board(comp)
+    make_board(user_guesses)
+    generate_ship_loc(user)
+    generate_ship_loc(comp)
     
 
 def welcome():
@@ -81,20 +81,45 @@ def welcome():
     username = input("Type in a username and press return: ")
     print(f"Hi {username}! We will auto generate your battleship locations. You have 4 battleships to find within the computer's board")
     print("Here is the computer's board:")
-    print_board(board_user_guesses)
+    print_board(user_guesses)
+
 
 def user_guess():
     """
     Get user input on battleship guess
     """
-    guess_col = int(input("Which column would you like to fire at? Enter a number and press enter:"))
-    guess_row = int(input("Which row would you like to fire at? Enter a number and press enter:"))  
-    if board_comp[guess_col][guess_row] == " o ":
-        board_user_guesses[guess_col][guess_row] = " # "
+    print("Which column would you like to fire at?")
+    guess_col = int(input("Enter a number and press enter: "))
+    print("Which row would you like to fire at?")
+    guess_row = int(input("Enter a number and press enter: "))  
+    if comp[guess_col][guess_row] == " o ":
+        user_guesses[guess_col][guess_row] = " # "
+        print("YAY! You hit their ship!")
     else:
-        board_user_guesses[guess_col][guess_row] = " * "
-    print_board(board_user_guesses)
+        user_guesses[guess_col][guess_row] = " * "
+        print("Oh no! You missed their ship :(")
+    print_board(user_guesses)
+
+
+def comp_guess():
+    """
+    Computer guess at user board
+    """
+    print("Now the computer's turn!")
+    guess_col = random_num(comp)
+    guess_row = random_num(comp)
+    print(f"They've chosen {guess_col}, {guess_row}")
+    if user[guess_col][guess_row] == " o ":
+        user[guess_col][guess_row] = " # "
+        print("It's a hit! :(")
+    else:
+        user[guess_col][guess_row] = " * "
+        print("YAY! They missed!")
+    print("Here's your board: ")
+    print_board(user)
+
 
 main()
 welcome()
 user_guess()
+comp_guess()
