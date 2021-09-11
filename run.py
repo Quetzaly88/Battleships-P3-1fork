@@ -4,13 +4,14 @@
 from random import randint
 
 
-board = []
+board_user = []
+board_user_guesses = []
+board_comp = []
 
 
-def make_board():
+def make_board(board):
     """
-    Make the starting board of X, it has no required arguments and returns the
-    board
+    Make the starting board of X
     """
 
     for ind in range(0, 5):
@@ -45,15 +46,55 @@ def generate_ship_loc(board):
         ship_row = random_num(board)
         board[ship_col][ship_row] = " o "
         ind += 1
+    # note that it is possible to have the same random numbers twice so less
+    # than 4 ships to aim for which would make the game unfair
+
+
+def welcome():
+    """
+    Opening message to the game
+    """
+    print("Welcome to you vs. computer Battleships!")
+    username = input("Type in a username and press return: ")
+    print(f"Hi {username}! We will auto generate your battleship locations. You have 4 battleships to find within the computer's board")
+    print("Here is the computer's board:")
+    print_board(board_user_guesses)
+
 
 
 def main():
     """
     The function calling function
     """
-    make_board()
-    generate_ship_loc(board)
-    print_board(board)
+    make_board(board_user)
+    make_board(board_comp)
+    make_board(board_user_guesses)
+    generate_ship_loc(board_user)
+    generate_ship_loc(board_comp)
+    
 
+def welcome():
+    """
+    Opening message to the game
+    """
+    print("Welcome to you vs. computer Battleships!")
+    username = input("Type in a username and press return: ")
+    print(f"Hi {username}! We will auto generate your battleship locations. You have 4 battleships to find within the computer's board")
+    print("Here is the computer's board:")
+    print_board(board_user_guesses)
+
+def user_guess():
+    """
+    Get user input on battleship guess
+    """
+    guess_col = int(input("Which column would you like to fire at? Enter a number and press enter:"))
+    guess_row = int(input("Which row would you like to fire at? Enter a number and press enter:"))  
+    if board_comp[guess_col][guess_row] == " o ":
+        board_user_guesses[guess_col][guess_row] = " # "
+    else:
+        board_user_guesses[guess_col][guess_row] = " * "
+    print_board(board_user_guesses)
 
 main()
+welcome()
+user_guess()
