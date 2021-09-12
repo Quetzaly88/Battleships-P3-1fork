@@ -22,9 +22,10 @@ The computer and user will take ten turns to find all 4 of the ships, should all
 
 ### Manual Testing
 
-### Bugs
+### Bugs/Updates after Testing
 
 - After user testing, starting at 0 was a little confusing so the code was updated to accept numbers between 1 and 5 instead.
+- After user feedback, I also implemented the input breaks where the user must press enter to continue so that they could see the result of each turn without needing to scroll up.
 
 ### Validator Testing
 
@@ -34,3 +35,4 @@ The computer and user will take ten turns to find all 4 of the ships, should all
 
 - This project uses the [Code Institute student template](https://github.com/Code-Institute-Org/python-essentials-template) for deploying the third portfolio project, the Python command-line project
 - The idea of using battleships is a suggested one by the Code Institute with "Ultimate Battleships" as inspiration
+- Thank you to my friend Jodie Clark for being my user and testing the game, your points were invaluable.

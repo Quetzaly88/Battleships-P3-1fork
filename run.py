@@ -91,32 +91,32 @@ def user_guess():
     while repeat:
         # check whether data is valid
         while True:
+            print("\nWhich column would you like to fire at?")
+            guess_col = input("Enter a number and press enter: \n")
+            if validate_data(guess_col):
+                break
+         while True:
             print("\nWhich row would you like to fire at?")
             guess_row = input("Enter a number and press enter: \n")
             if validate_data(guess_row):
                 break
 
-        while True:
-            print("\nWhich column would you like to fire at?")
-            guess_col = input("Enter a number and press enter: \n")
-            if validate_data(guess_col):
-                break
         # minus 1 as the users enter numbers between 1 and 5
-        guess_row = int(guess_row)-1
         guess_col = int(guess_col)-1
+        guess_row = int(guess_row)-1
 
         # check if we've already chosen that spot
-        if (user_guesses[guess_row][guess_col] == " * " or
-                user_guesses[guess_row][guess_col] == " # "):
+        if (user_guesses[guess_col][guess_row] == " * " or
+                user_guesses[guess_col][guess_row] == " # "):
             print("You've already picked that spot, try again!")
         else:
             repeat = False
     # Check whether that spot is a hit or not and display result
-    if comp[guess_row][guess_col] == " o ":
-        user_guesses[guess_row][guess_col] = " # "
+    if comp[guess_col][guess_row] == " o ":
+        user_guesses[guess_col][guess_row] = " # "
         print("\nYAY! You hit their ship!")
     else:
-        user_guesses[guess_row][guess_col] = " * "
+        user_guesses[guess_col][guess_row] = " * "
         print("\nOh no! You missed their ship :(")
 
 
@@ -131,19 +131,20 @@ def comp_guess():
     guess_row = random_num(comp)
     # Check if we've already chosen that spot
     while repeat:
-        if (user[guess_row][guess_col] == " * " or
-                user[guess_row][guess_col] == " # "):
-            guess_row = random_num(comp)
+        if (user[guess_col][guess_row] == " * " or
+                user[guess_col][guess_row] == " # "):
             guess_col = random_num(comp)
+            guess_row = random_num(comp)
+            
         else:
             repeat = False
     # Display to the user what the computer chose and result
-    print(f"They've chosen {guess_row + 1}, {guess_col + 1}")
-    if user[guess_row][guess_col] == " o ":
-        user[guess_row][guess_col] = " # "
+    print(f"They've chosen {guess_col + 1}, {guess_row + 1}")
+    if user[guess_col][guess_row] == " o ":
+        user[guess_col][guess_row] = " # "
         print("It's a hit! :(")
     else:
-        user[guess_row][guess_col] = " * "
+        user[guess_col][guess_row] = " * "
         print("YAY! They missed!")
 
 
