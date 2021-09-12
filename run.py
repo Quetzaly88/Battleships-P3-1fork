@@ -57,7 +57,7 @@ def welcome():
     Opening message to the game that also takes in a username.
     """
     print("Welcome to you vs. computer Battleships!")
-    username = input("Type in a username and press return: ")
+    username = input("Type in a username and press return: \n")
     print(f'''\nHi {username}! We will auto generate your battleship locations.
 You have 4 battleships to find within the computer's board.''')
     # print("Here is the computer's board:")
@@ -92,12 +92,12 @@ def user_guess():
         # check whether data is valid
         while True:
             print("\nWhich column would you like to fire at?")
-            guess_col = input("Enter a number and press enter: ")
+            guess_col = input("Enter a number and press enter: \n")
             if validate_data(guess_col):
                 break
         while True:
             print("\nWhich row would you like to fire at?")
-            guess_row = input("Enter a number and press enter: ")
+            guess_row = input("Enter a number and press enter: \n")
             if validate_data(guess_row):
                 break
 
