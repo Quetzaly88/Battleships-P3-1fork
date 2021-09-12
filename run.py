@@ -17,7 +17,8 @@ def make_board(board):
 
 def print_board(board):
     """
-    Prints the board lists of X, removing list formatting and adding spaces
+    Prints the board lists of X, removing list formatting and
+     adding spaces
     """
     for ind in board:
         print(" ".join(ind))
@@ -57,10 +58,10 @@ def welcome():
     """
     print("Welcome to you vs. computer Battleships!")
     username = input("Type in a username and press return: ")
-    print(f'''Hi {username}! We will auto generate your battleship locations.
+    print(f'''\nHi {username}! We will auto generate your battleship locations.
 You have 4 battleships to find within the computer's board.''')
-    print("Here is the computer's board:")
-    print_board(user_guesses)
+    # print("Here is the computer's board:")
+    # print_board(user_guesses)
 
 
 def generate_boards():
@@ -90,12 +91,12 @@ def user_guess():
     while repeat:
         # check whether data is valid
         while True:
-            print("Which column would you like to fire at?")
+            print("\nWhich column would you like to fire at?")
             guess_col = input("Enter a number and press enter: ")
             if validate_data(guess_col):
                 break
         while True:
-            print("Which row would you like to fire at?")
+            print("\nWhich row would you like to fire at?")
             guess_row = input("Enter a number and press enter: ")
             if validate_data(guess_row):
                 break
@@ -111,17 +112,17 @@ def user_guess():
     # Check whether that spot is a hit or not and display result
     if comp[guess_col][guess_row] == " o ":
         user_guesses[guess_col][guess_row] = " # "
-        print("YAY! You hit their ship!")
+        print("\nYAY! You hit their ship!")
     else:
         user_guesses[guess_col][guess_row] = " * "
-        print("Oh no! You missed their ship :(")
+        print("\nOh no! You missed their ship :(")
 
 
 def comp_guess():
     """
     Computer guess at user board using randomly generate co-ordinates
     """
-    print("Now the computer's turn!")
+    print("\n\nNow the computer's turn!")
     repeat = True
     # Generate first random numbers
     guess_col = random_num(comp)
@@ -158,11 +159,11 @@ def game_play():
     welcome()
     i = 0
     while i < 10:
-        print(f"This is turn {i +1}/10")
+        print(f"\nThis is turn {i +1}/10 \n")
         user_guess()
         print_board(user_guesses)
         comp_guess()
-        print("Here's your board: ")
+        print("\nHere's your board: ")
         print_board(user)
         i += 1
         if check_winner(user) == 4:
