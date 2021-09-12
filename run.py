@@ -7,9 +7,8 @@ comp = []
 
 def make_board(board):
     """
-    Make the starting board of X
+    Make the starting board of 5 "X" in 5 lists
     """
-
     for ind in range(0, 5):
         board.append([" X "]*5)
         ind += 1
@@ -18,7 +17,7 @@ def make_board(board):
 
 def print_board(board):
     """
-    prints the board
+    Prints the board lists of X, removing list formatting and adding spaces
     """
     for ind in board:
         print(" ".join(ind))
@@ -27,29 +26,34 @@ def print_board(board):
 def random_num(board):
     """
     Generate a random number between 0 and the length of the board minus one.
-    We minus 1 because len starts at 1 but the board and arrays etc. start at 0
+    We minus 1 because len starts at 1 but the board's lists start at 0
     """
     return randint(0, len(board)-1)
 
 
 def generate_ship_loc(board):
     """
-    Uses random_num to generate locations for battleships, updates the board
-    with "o" characters to signify where the ships are for the user
+    We want 4 ships to be on the board and the while loop ensures there will
+    be. It generates random co-ordinates, places the "o", then counts how many
+    "o" are in the board's lists, keeping track with variable ship_num. If that
+    number is less than 4, it loops again. This should catch if any locations
+    are randomly generated more than once.
     """
-    ship_spot = 0
-    while ship_spot < 4:
-        ship_spot = 0  # reset ship_spot value every loop
+    ship_num = 0
+    while ship_num < 4:  # we want 4 ships to be on the board
+        ship_num = 0  # reset ship_num value every loop
         ship_col = random_num(board)
         ship_row = random_num(board)
         board[ship_col][ship_row] = " o "
+        # for every list in the board, we look for " o " and keep a running
+        # total with ship_num
         for list in board:
-            ship_spot += list.count(" o ")
+            ship_num += list.count(" o ")
 
 
 def welcome():
     """
-    Opening message to the game
+    Opening message to the game that also takes in a username.
     """
     print("Welcome to you vs. computer Battleships!")
     username = input("Type in a username and press return: ")
@@ -84,7 +88,7 @@ def user_guess():
     print_board(user_guesses)
     repeat = True
     while repeat:
-
+        # check whether data is valid
         while True:
             print("Which column would you like to fire at?")
             guess_col = input("Enter a number and press enter: ")
@@ -98,13 +102,13 @@ def user_guess():
 
         guess_col = int(guess_col)
         guess_row = int(guess_row)
-
-        if (user_guesses[guess_col][guess_row] == " * "
-                or user_guesses[guess_col][guess_row] == " # "):
+        # check if we've already chosen that spot
+        if (user_guesses[guess_col][guess_row] == " * " or
+                user_guesses[guess_col][guess_row] == " # "):
             print("You've already picked that spot, try again!")
         else:
             repeat = False
-
+    # Check whether that spot is a hit or not and display result
     if comp[guess_col][guess_row] == " o ":
         user_guesses[guess_col][guess_row] = " # "
         print("YAY! You hit their ship!")
@@ -115,22 +119,22 @@ def user_guess():
 
 def comp_guess():
     """
-    Computer guess at user board
+    Computer guess at user board using randomly generate co-ordinates
     """
     print("Now the computer's turn!")
     repeat = True
-
+    # Generate first random numbers
     guess_col = random_num(comp)
     guess_row = random_num(comp)
-
+    # Check if we've already chosen that spot
     while repeat:
-        if (user[guess_col][guess_row] == " * "
-                or user[guess_col][guess_row] == " # "):
+        if (user[guess_col][guess_row] == " * " or
+                user[guess_col][guess_row] == " # "):
             guess_col = random_num(comp)
             guess_row = random_num(comp)
         else:
             repeat = False
-
+    # Display to the user what the computer chose and result
     print(f"They've chosen {guess_col}, {guess_row}")
     if user[guess_col][guess_row] == " o ":
         user[guess_col][guess_row] = " # "
@@ -138,13 +142,20 @@ def comp_guess():
     else:
         user[guess_col][guess_row] = " * "
         print("YAY! They missed!")
-    # check_winner(user)
 
 
 def game_play():
     """
-    Main loop for taking turns
+    Main loop for playing the game. First generate the boards and display the
+    welcome message. Then, there's a while loop so that we can take a maximum
+    of then turns. In the while loop, we display with turn it is, then run the
+    user guess, print and computer guess functions. Then each turn, we check
+    whether there is a winner, if there is, we exit the loop and run the final
+    winning check and message function. If after all the turns, there is no
+    winner, we still run the final winning check function.
     """
+    generate_boards()
+    welcome()
     i = 0
     while i < 10:
         print(f"This is turn {i +1}/10")
@@ -163,8 +174,7 @@ def game_play():
 
 def validate_data(value):
     """
-    If values is not between 0 and 4, will raise an error and request a new
-    input
+    If values is not between 0 and 4, raise an error and request a new input
     """
     try:
         if int(value) > 4 or int(value) < 0:
@@ -174,14 +184,12 @@ def validate_data(value):
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.")
         return False
-
     return True
 
 
 def check_winner(board):
     """
     Sums the number of times " # " (hit battleships) appear in the board.
-    If it is equal to 4, that means someone has won.
     """
     total = 0
     for list in board:
@@ -203,6 +211,4 @@ def check_winner_final():
         print("It was a draw!")
 
 
-generate_boards()
-welcome()
 game_play()
