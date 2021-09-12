@@ -95,7 +95,7 @@ def user_guess():
             guess_col = input("Enter a number and press enter: \n")
             if validate_data(guess_col):
                 break
-         while True:
+        while True:
             print("\nWhich row would you like to fire at?")
             guess_row = input("Enter a number and press enter: \n")
             if validate_data(guess_row):
@@ -135,7 +135,6 @@ def comp_guess():
                 user[guess_col][guess_row] == " # "):
             guess_col = random_num(comp)
             guess_row = random_num(comp)
-            
         else:
             repeat = False
     # Display to the user what the computer chose and result
