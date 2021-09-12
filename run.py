@@ -1,6 +1,7 @@
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 # Need: complete winning checking
-# Need: check if that turn has already been taken.
+# Need: dont show the boards again at cycle 10 but show a winning statement
+# Need: check whether the random um generator has made 4 ships
 
 from random import randint
 
@@ -68,8 +69,8 @@ def generate_boards():
     Creates all the boards ready for use. A user board which will house the
     user's battleships that the computer will try to find. The comp board is
     the computer board housing the computer's battleships but the user_guesses
-    board will be the version of the computer board shown to the user - we don't
-    want to show the user where the computer's ships are!
+    board will be the version of the computer board shown to the user - we
+    don't want to show the user where the computer's ships are!
     """
     make_board(user)
     make_board(comp)
@@ -80,24 +81,34 @@ def generate_boards():
 
 def user_guess():
     """
-    Get user input on battleship guess
+    Get user input on battleship guess, check whether it is valid data,
+    check whether that shot has already been taken, check whether they hit a
+    battleship and show them the result of their turn.
     """
     print("Here is the computer's board:")
     print_board(user_guesses)
-    print("Which column would you like to fire at?")
+    repeat = True
+    while repeat:
 
-    while True:
-        guess_col = input("Enter a number and press enter: ")
-        if validate_data(guess_col):
-            break
-    while True:
-        print("Which row would you like to fire at?")
-        guess_row = input("Enter a number and press enter: ")
-        if validate_data(guess_row):
-            break
+        while True:
+            print("Which column would you like to fire at?")
+            guess_col = input("Enter a number and press enter: ")
+            if validate_data(guess_col):
+                break
+        while True:
+            print("Which row would you like to fire at?")
+            guess_row = input("Enter a number and press enter: ")
+            if validate_data(guess_row):
+                break
 
-    guess_col = int(guess_col)
-    guess_row = int(guess_row)
+        guess_col = int(guess_col)
+        guess_row = int(guess_row)
+
+        if (user_guesses[guess_col][guess_row] == " * "
+                or user_guesses[guess_col][guess_row] == " # "):
+            print("You've already picked that spot, try again!")
+        else:
+            repeat = False
 
     if comp[guess_col][guess_row] == " o ":
         user_guesses[guess_col][guess_row] = " # "
@@ -113,8 +124,19 @@ def comp_guess():
     Computer guess at user board
     """
     print("Now the computer's turn!")
+    repeat = True
+
     guess_col = random_num(comp)
     guess_row = random_num(comp)
+
+    while repeat:
+        if (user[guess_col][guess_row] == " * "
+                or user[guess_col][guess_row] == " # "):
+            guess_col = random_num(comp)
+            guess_row = random_num(comp)
+        else:
+            repeat = False
+
     print(f"They've chosen {guess_col}, {guess_row}")
     if user[guess_col][guess_row] == " o ":
         user[guess_col][guess_row] = " # "
