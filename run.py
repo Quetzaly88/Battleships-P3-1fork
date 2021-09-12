@@ -164,9 +164,11 @@ def game_play():
         print(f"\nThis is turn {i +1}/10 \n")
         user_guess()
         print_board(user_guesses)
+        input("\nPress Enter to continue...")
         comp_guess()
         print("\nHere's your board: ")
         print_board(user)
+        input("\nPress Enter to continue...")
         i += 1
         if check_winner(user) == 4:
             i = 10
