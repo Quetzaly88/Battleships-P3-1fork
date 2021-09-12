@@ -1,9 +1,4 @@
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
-# Need: complete winning checking
-# Need: dont show the boards again at cycle 10 but show a winning statement
-
 from random import randint
-
 
 user = []
 user_guesses = []
@@ -44,7 +39,7 @@ def generate_ship_loc(board):
     """
     ship_spot = 0
     while ship_spot < 4:
-        ship_spot = 0 # reset ship_spot value every loop
+        ship_spot = 0  # reset ship_spot value every loop
         ship_col = random_num(board)
         ship_row = random_num(board)
         board[ship_col][ship_row] = " o "
@@ -118,7 +113,6 @@ def user_guess():
         print("Oh no! You missed their ship :(")
 
 
-
 def comp_guess():
     """
     Computer guess at user board
@@ -151,7 +145,8 @@ def game_play():
     """
     Main loop for taking turns
     """
-    for i in range(0, 2):
+    i = 0
+    while i < 10:
         print(f"This is turn {i +1}/10")
         user_guess()
         print_board(user_guesses)
@@ -159,7 +154,10 @@ def game_play():
         print("Here's your board: ")
         print_board(user)
         i += 1
-    #now check for a winner, if we've not won before now
+        if check_winner(user) == 4:
+            i = 10
+        elif check_winner(user_guesses) == 4:
+            i = 10
     check_winner_final()
 
 
@@ -182,20 +180,23 @@ def validate_data(value):
 
 def check_winner(board):
     """
-    Sums the number of times " o " (battleships) appear in the board. if it is
-    equal to zero, that means someone has won.
+    Sums the number of times " # " (hit battleships) appear in the board.
+    If it is equal to 4, that means someone has won.
     """
     total = 0
     for list in board:
-        total += list.count(" o ")
+        total += list.count(" # ")
     return total
 
 
 def check_winner_final():
-    user_result = check_winner(user)
-    comp_result = check_winner(user_guesses)
+    """
+    Check for a winner after ten turns and report the result to the user
+    """
+    user_result = check_winner(user_guesses)
+    comp_result = check_winner(user)
     if user_result > comp_result:
-        print("Congratulations - you have the most hits! You WIN")
+        print("Congratulations! You WIN!")
     elif user_result < comp_result:
         print("Commiserations - the computer had the most hits!")
     else:
