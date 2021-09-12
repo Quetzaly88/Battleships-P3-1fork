@@ -61,7 +61,7 @@ def welcome():
     print(f'''\nHi {username}! We will auto generate your battleship locations.
 You have 4 battleships to find within the computer's board.''')
     print('''\nX are empty locations, * are shots that missed and # are hits
-Be aware that the grid is five wide using integers between 0 and 4''')
+Be aware that the grid is five wide using integers between 1 and 5''')
 
 
 def generate_boards():
@@ -106,17 +106,17 @@ def user_guess():
         guess_row = int(guess_row)-1
 
         # check if we've already chosen that spot
-        if (user_guesses[guess_col][guess_row] == " * " or
-                user_guesses[guess_col][guess_row] == " # "):
+        if (user_guesses[guess_row][guess_col] == " * " or
+                user_guesses[guess_row][guess_col] == " # "):
             print("You've already picked that spot, try again!")
         else:
             repeat = False
     # Check whether that spot is a hit or not and display result
-    if comp[guess_col][guess_row] == " o ":
-        user_guesses[guess_col][guess_row] = " # "
+    if comp[guess_row][guess_col] == " o ":
+        user_guesses[guess_row][guess_col] = " # "
         print("\nYAY! You hit their ship!")
     else:
-        user_guesses[guess_col][guess_row] = " * "
+        user_guesses[guess_row][guess_col] = " * "
         print("\nOh no! You missed their ship :(")
 
 
@@ -131,19 +131,19 @@ def comp_guess():
     guess_row = random_num(comp)
     # Check if we've already chosen that spot
     while repeat:
-        if (user[guess_col][guess_row] == " * " or
-                user[guess_col][guess_row] == " # "):
+        if (user[guess_row][guess_col] == " * " or
+                user[guess_row][guess_col] == " # "):
             guess_col = random_num(comp)
             guess_row = random_num(comp)
         else:
             repeat = False
     # Display to the user what the computer chose and result
     print(f"They've chosen {guess_col + 1}, {guess_row + 1}")
-    if user[guess_col][guess_row] == " o ":
-        user[guess_col][guess_row] = " # "
+    if user[guess_row][guess_col] == " o ":
+        user[guess_row][guess_col] = " # "
         print("It's a hit! :(")
     else:
-        user[guess_col][guess_row] = " * "
+        user[guess_row][guess_col] = " * "
         print("YAY! They missed!")
 
 
