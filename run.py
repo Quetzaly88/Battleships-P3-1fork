@@ -44,8 +44,7 @@ def generate_ship_loc(board):
     """
     ship_spot = 0
     while ship_spot < 4:
-        ship_spot = 0
-        #reset ship_spot value every loop
+        ship_spot = 0 # reset ship_spot value every loop
         ship_col = random_num(board)
         ship_row = random_num(board)
         board[ship_col][ship_row] = " o "
@@ -117,7 +116,7 @@ def user_guess():
     else:
         user_guesses[guess_col][guess_row] = " * "
         print("Oh no! You missed their ship :(")
-    print_board(user_guesses)
+
 
 
 def comp_guess():
@@ -145,17 +144,23 @@ def comp_guess():
     else:
         user[guess_col][guess_row] = " * "
         print("YAY! They missed!")
-    print("Here's your board: ")
-    print_board(user)
-    check_winner(user)
+    # check_winner(user)
 
 
 def game_play():
-    for i in range(0, 10):
+    """
+    Main loop for taking turns
+    """
+    for i in range(0, 2):
         print(f"This is turn {i +1}/10")
         user_guess()
+        print_board(user_guesses)
         comp_guess()
+        print("Here's your board: ")
+        print_board(user)
         i += 1
+    #now check for a winner, if we've not won before now
+    check_winner_final()
 
 
 def validate_data(value):
@@ -183,8 +188,18 @@ def check_winner(board):
     total = 0
     for list in board:
         total += list.count(" o ")
-    if total == 0:
-        print("The game is WON!")
+    return total
+
+
+def check_winner_final():
+    user_result = check_winner(user)
+    comp_result = check_winner(user_guesses)
+    if user_result > comp_result:
+        print("Congratulations - you have the most hits! You WIN")
+    elif user_result < comp_result:
+        print("Commiserations - the computer had the most hits!")
+    else:
+        print("It was a draw!")
 
 
 generate_boards()
