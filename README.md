@@ -24,6 +24,8 @@ The computer and user will take ten turns to find all 4 of the ships, should all
 
 ### Bugs
 
+- After user testing, starting at 0 was a little confusing so the code was updated to accept numbers between 1 and 5 instead.
+
 ### Validator Testing
 
 ## Deployment
@@ -32,20 +34,3 @@ The computer and user will take ten turns to find all 4 of the ships, should all
 
 - This project uses the [Code Institute student template](https://github.com/Code-Institute-Org/python-essentials-template) for deploying the third portfolio project, the Python command-line project
 - The idea of using battleships is a suggested one by the Code Institute with "Ultimate Battleships" as inspiration
-
-## Creating the Heroku app
-
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
-
-1. `heroku/python`
-2. `heroku/nodejs`
-
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
-
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
-
-Connect your GitHub repository and deploy as normal.
-
-## Constraints
-
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.

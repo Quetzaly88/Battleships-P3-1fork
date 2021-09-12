@@ -60,6 +60,8 @@ def welcome():
     username = input("Type in a username and press return: \n")
     print(f'''\nHi {username}! We will auto generate your battleship locations.
 You have 4 battleships to find within the computer's board.''')
+    print('''\nX are empty locations, * are shots that missed and # are hits
+Be aware that the grid is five wide using integers between 0 and 4''')
     # print("Here is the computer's board:")
     # print_board(user_guesses)
 
@@ -101,8 +103,8 @@ def user_guess():
             if validate_data(guess_row):
                 break
 
-        guess_col = int(guess_col)
-        guess_row = int(guess_row)
+        guess_col = int(guess_col)-1
+        guess_row = int(guess_row)-1
         # check if we've already chosen that spot
         if (user_guesses[guess_col][guess_row] == " * " or
                 user_guesses[guess_col][guess_row] == " # "):
@@ -175,12 +177,12 @@ def game_play():
 
 def validate_data(value):
     """
-    If values is not between 0 and 4, raise an error and request a new input
+    If values is not between 1 and 5, raise an error and request a new input
     """
     try:
-        if int(value) > 4 or int(value) < 0:
+        if int(value) > 5 or int(value) < 1:
             raise ValueError(
-                "Your shot is out of bounds! Choose a number between 0 and 4"
+                "Your shot is out of bounds! Choose a number between 1 and 5"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.")
