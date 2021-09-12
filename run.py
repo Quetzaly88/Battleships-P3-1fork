@@ -1,7 +1,6 @@
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 # Need: complete winning checking
 # Need: dont show the boards again at cycle 10 but show a winning statement
-# Need: check whether the random um generator has made 4 ships
 
 from random import randint
 
@@ -43,13 +42,15 @@ def generate_ship_loc(board):
     Uses random_num to generate locations for battleships, updates the board
     with "o" characters to signify where the ships are for the user
     """
-    for ind in range(0, 4):
+    ship_spot = 0
+    while ship_spot < 4:
+        ship_spot = 0
+        #reset ship_spot value every loop
         ship_col = random_num(board)
         ship_row = random_num(board)
         board[ship_col][ship_row] = " o "
-        ind += 1
-    # note that it is possible to have the same random numbers twice so less
-    # than 4 ships to aim for which would make the game unfair
+        for list in board:
+            ship_spot += list.count(" o ")
 
 
 def welcome():
