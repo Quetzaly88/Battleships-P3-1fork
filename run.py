@@ -45,7 +45,7 @@ def generate_ship_loc(board):
         ship_num = 0  # reset ship_num value every loop
         ship_col = random_num(board)
         ship_row = random_num(board)
-        board[ship_col][ship_row] = " o "
+        board[ship_row][ship_col] = " o "
         # for every list in the board, we look for " o " and keep a running
         # total with ship_num
         for list in board:
@@ -62,8 +62,6 @@ def welcome():
 You have 4 battleships to find within the computer's board.''')
     print('''\nX are empty locations, * are shots that missed and # are hits
 Be aware that the grid is five wide using integers between 0 and 4''')
-    # print("Here is the computer's board:")
-    # print_board(user_guesses)
 
 
 def generate_boards():
@@ -93,30 +91,32 @@ def user_guess():
     while repeat:
         # check whether data is valid
         while True:
-            print("\nWhich column would you like to fire at?")
-            guess_col = input("Enter a number and press enter: \n")
-            if validate_data(guess_col):
-                break
-        while True:
             print("\nWhich row would you like to fire at?")
             guess_row = input("Enter a number and press enter: \n")
             if validate_data(guess_row):
                 break
 
-        guess_col = int(guess_col)-1
+        while True:
+            print("\nWhich column would you like to fire at?")
+            guess_col = input("Enter a number and press enter: \n")
+            if validate_data(guess_col):
+                break
+        # minus 1 as the users enter numbers between 1 and 5
         guess_row = int(guess_row)-1
+        guess_col = int(guess_col)-1
+
         # check if we've already chosen that spot
-        if (user_guesses[guess_col][guess_row] == " * " or
-                user_guesses[guess_col][guess_row] == " # "):
+        if (user_guesses[guess_row][guess_col] == " * " or
+                user_guesses[guess_row][guess_col] == " # "):
             print("You've already picked that spot, try again!")
         else:
             repeat = False
     # Check whether that spot is a hit or not and display result
-    if comp[guess_col][guess_row] == " o ":
-        user_guesses[guess_col][guess_row] = " # "
+    if comp[guess_row][guess_col] == " o ":
+        user_guesses[guess_row][guess_col] = " # "
         print("\nYAY! You hit their ship!")
     else:
-        user_guesses[guess_col][guess_row] = " * "
+        user_guesses[guess_row][guess_col] = " * "
         print("\nOh no! You missed their ship :(")
 
 
@@ -131,19 +131,19 @@ def comp_guess():
     guess_row = random_num(comp)
     # Check if we've already chosen that spot
     while repeat:
-        if (user[guess_col][guess_row] == " * " or
-                user[guess_col][guess_row] == " # "):
-            guess_col = random_num(comp)
+        if (user[guess_row][guess_col] == " * " or
+                user[guess_row][guess_col] == " # "):
             guess_row = random_num(comp)
+            guess_col = random_num(comp)
         else:
             repeat = False
     # Display to the user what the computer chose and result
-    print(f"They've chosen {guess_col}, {guess_row}")
-    if user[guess_col][guess_row] == " o ":
-        user[guess_col][guess_row] = " # "
+    print(f"They've chosen {guess_row + 1}, {guess_col + 1}")
+    if user[guess_row][guess_col] == " o ":
+        user[guess_row][guess_col] = " # "
         print("It's a hit! :(")
     else:
-        user[guess_col][guess_row] = " * "
+        user[guess_row][guess_col] = " * "
         print("YAY! They missed!")
 
 
