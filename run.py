@@ -191,8 +191,9 @@ def validate_data(value):
             raise ValueError(
                 "Your shot is out of bounds! Choose a number between 1 and 5"
             )
-    except ValueError:
-        print("Not a valid integer, please try again.")
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.")
+        print("Please enter an integer between 1 and 5")
         return False
     return True
 
