@@ -8,17 +8,19 @@ comp = []
 def make_board(board):
     """
     Make the starting board of 5 "X" in 5 lists
+    Arguments: an empty list
+    Returns: a list containing 5 lists of the letter X
     """
-    for ind in range(0, 5):
+    for i in range(5):
         board.append([" X "]*5)
-        ind += 1
     return board
 
 
 def print_board(board):
     """
     Prints the board lists of X, removing list formatting and
-     adding spaces
+    adding spaces
+    Argument: a list
     """
     for ind in board:
         print(" ".join(ind))
@@ -28,6 +30,7 @@ def random_num(board):
     """
     Generate a random number between 0 and the length of the board minus one.
     We minus 1 because len starts at 1 but the board's lists start at 0
+    Argument: a list (expected to be the player's board)
     """
     return randint(0, len(board)-1)
 
@@ -39,6 +42,7 @@ def generate_ship_loc(board):
     "o" are in the board's lists, keeping track with variable ship_num. If that
     number is less than 4, it loops again. This should catch if any locations
     are randomly generated more than once.
+    Argument: a list, expected to be the populated players board
     """
     ship_num = 0
     while ship_num < 4:  # we want 4 ships to be on the board
@@ -48,8 +52,8 @@ def generate_ship_loc(board):
         board[ship_row][ship_col] = " o "
         # for every list in the board, we look for " o " and keep a running
         # total with ship_num
-        for list in board:
-            ship_num += list.count(" o ")
+        for row in board:
+            ship_num += row.count(" o ")
 
 
 def welcome():
@@ -58,10 +62,10 @@ def welcome():
     """
     print("Welcome to you vs. computer Battleships!")
     username = input("Type in a username and press return: \n")
-    print(f'''\nHi {username}! We will auto generate your battleship locations.
-You have 4 battleships to find within the computer's board.''')
-    print('''\nX are empty locations, * are shots that missed and # are hits
-Be aware that the grid is five wide using integers between 1 and 5''')
+    print(f'\nHi {username}! We will auto generate your battleship locations.'
+          'You have 4 battleships to find within the computer\'s board.')
+    print('\nX are empty locations, * are shots that missed and # are hits'
+          'Be aware that the grid is five wide using integers between 1 and 5')
 
 
 def generate_boards():
@@ -180,14 +184,15 @@ def game_play():
 def validate_data(value):
     """
     If values is not between 1 and 5, raise an error and request a new input
+    Argument: user input value
     """
     try:
         if int(value) > 5 or int(value) < 1:
             raise ValueError(
                 "Your shot is out of bounds! Choose a number between 1 and 5"
             )
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.")
+    except ValueError:
+        print("Not a valid integer, please try again.")
         return False
     return True
 
@@ -195,6 +200,7 @@ def validate_data(value):
 def check_winner(board):
     """
     Sums the number of times " # " (hit battleships) appear in the board.
+    Argument: a list, expected to be the player board
     """
     total = 0
     for list in board:
@@ -216,4 +222,5 @@ def check_winner_final():
         print("It was a draw!")
 
 
+# Call the main function
 game_play()

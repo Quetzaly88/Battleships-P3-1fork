@@ -13,6 +13,7 @@ The game will then request that the user enters a column and row number (essenti
 The computer and user will take ten turns to find all 4 of the ships, should all 10 turns be taken without finding 4 ships, the game will state who has had the most hits and display them as the winner. 
 
 # Features
+![image of battleships app](battleships-herokuapp.PNG)
 
 ## Existing Features
 
@@ -40,20 +41,22 @@ The computer and user will take ten turns to find all 4 of the ships, should all
     - I tried simply pressing return without entering a value, the code displayed an error message and asked me to try again.
 - When entering a column and row number, the shot is fired at the correct co-ordinates. This was checked with the numbers (5,4) and (2,3) and displayed as expected
 - Checked that the maximum number of turns is ten
-- Checked that if the game is won before the ten turns, it will stop the game and display the result. This was tested manually by making the number of # to win, zero and the game is then immediately won. This was reverted back to 4 after testing.
+- Checked that if the game is won before the ten turns, it will stop the game and display the result. This was tested manually by making the number of # (hits) to win, zero and the game is then immediately won. This was reverted back to 4 after testing.
 - Checked that the code to count the number of a character in the board counts the correct amount.
 - Checked that there is always four randomly generate battleship locations when a board is generated. 
 - Checked that there is no negative impact if the user enters values rather than just pressing enter to continue the game.
+
 
 ## Bugs/Updates after Testing
 
 - After user testing, starting at 0 was a little confusing so the code was updated to accept numbers between 1 and 5 instead.
 - After user feedback, I also implemented the input breaks where the user must press enter to continue so that they could see the result of each turn without needing to scroll up.
 - There were many commits where I was confused between rows and columns - these have been rectified. 
+- If (for some unknown reason) the code was edited for a smaller board containing less than 4 locations, the ship generating function would be stuck in a loop.
 
 ## Validator Testing
 
-- Fully passed the [pep8 online validator](http://pep8online.com/) with the result "All right"
+- Fully passed the [PEP8 online validator](http://pep8online.com/) with the result "All right"
 
 # Deployment
 This project was deployed using Code Institute's mock terminal for Heroku.
@@ -69,4 +72,5 @@ The steps for deployment are as follows:
 
 - This project uses the [Code Institute student template](https://github.com/Code-Institute-Org/python-essentials-template) for deploying the third portfolio project, the Python command-line project.
 - The idea of using battleships is a suggested one by the Code Institute with "Ultimate Battleships" as inspiration.
-- Thank you to my friend Jodie Clark for providing user feedback, your points were invaluable.
+- Thank you to my friend, Jodie Clark, for providing user feedback: your points were invaluable.
+- Brian Macharia for mentor support and finishing touches.
