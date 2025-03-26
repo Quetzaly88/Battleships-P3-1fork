@@ -1,4 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battleship Game</title>
+
+    <!-- Xterm CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.min.css" />
+
+    <!-- Xterm and Socket.IO Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <style>
+    </style>
+
+</head>
+
 <body>
+    <button onclick="window.location.reload()">Run Program</button>
+    <div id="terminal" style="margin-top: 10px;"></div>
+
+    <script>
+        // Set new terminal
+        const term = new Terminal({ cols: 80, rows: 24 });
+        term.open(document.getElementById("terminal"));
+        term.writeln("🚀 Connecting to server...\n");
+
+        // Connect to the Socket.IO server
+        const socket = io();
+
+        // When connected
+        socket.on("connect", () => {
+            term.writeln("Connected to server\n");
+        });
+
+        // Handle messages from server (Python script)
+        socket.on("console_output", (data) => {
+            term.write(data + "\n");
+        });
+
+        // Handle disconnection
+        socket.on("disconnect", () => {
+            term.writeln("Disconnected from server.");
+        });
+
+        // Send user input back to server
+        term.onData((data) => {
+            socket.emit("command_entered", data);
+        });
+
+    </script>
+</body>
+
+</html>
+
+<!-- <body>
     <button onclick="window.location.reload()">Run Program</button>
     <div id="terminal"></div>
 
@@ -24,4 +82,4 @@
         // Set focus in the terminal
         document.getElementsByClassName("xterm-helper-textarea")[0].focus();
     </script>
-</body>
+</body> -->
